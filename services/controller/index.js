@@ -43,6 +43,28 @@ app.get('/shipping/:cep', (req, res, next) => {
 });
 
 /**
+ * Busca um produto pelo seu id
+ */
+ app.get('/product/:id', (req, res, next) => {
+    inventory.GetProductByID(
+        {
+            id: req.params.id,
+        },
+        (err, data) => {
+            if (err) {
+                console.error(err);
+                res.status(500).send({ error: 'something failed :(' });
+            } else {
+                res.json({
+                    cep: req.params.cep,
+                    value: data.value,
+                });
+            }
+        }
+    );
+});
+
+/**
  * Inicia o router
  */
 app.listen(3000, () => {
